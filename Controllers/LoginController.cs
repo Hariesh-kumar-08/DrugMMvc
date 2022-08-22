@@ -1,6 +1,7 @@
 ﻿using DrugMMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace DrugMMvc.Controllers
@@ -38,6 +39,28 @@ namespace DrugMMvc.Controllers
                 await client.PostAsync("https://localhost:7289/api/Login/", content);
 
             }
+
+            List<User> u1 = new List<User>();
+            
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage res = await client.GetAsync("https://localhost:7289/api/Login");
+                if (res.IsSuccessStatusCode)
+                {
+                    var Prodres = res.Content.ReadAsStringAsync().Result;
+                    u1 = JsonConvert.DeserializeObject<List<User>>(Prodres);
+                }
+            }
+            var g = (from i in u1 where i.UserId == u.UserId select i).FirstOrDefault();
+            HttpContext.Session.SetString("UserName", g.UserName);
+            HttpContext.Session.SetString("Location", g.Loc);
+            HttpContext.Session.SetString("PhoneNumber",g.PhoneNumber);
+            HttpContext.Session.SetString("EmailId", g.Email);
+
+
+
             return RedirectToAction("Index", "Calling");
         }
 

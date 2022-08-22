@@ -1,0 +1,85 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<DrugMMvc.Models.Product>
+
+
+<h3>Thanks for your purchase!</h3>
+<h3>Your item will get delivered at @ViewBag.Date</h3>
+<h3>Your Order Details are as follows:</h3>
+  @*  <h3>Name:@ViewBag.UserName</h3>
+    <h3>Phone Number:@ViewBag.PhNum</h3>
+   <h3>Location: @ViewBag.Location</h3>*@
+   <table style="width:100%">
+  <tr>
+    <td>Name</td>
+    <td>Phone Number</td>
+    <td>Location</td>
+    <td>Product Name</td>
+  </tr>
+   <tr>
+    <td><h5>@ViewBag.UserName</h5></td>
+    <td><h5>@ViewBag.PhNum</h5></td>
+    <td><h5>@ViewBag.Location</h5></td>
+     @foreach (var item in @ViewBag.Collection)
+   {
+      @*  <tr>
+       <td>*@
+           <td>
+       <h5>
+           
+               @Html.Raw(item) <br/>
+       </h5>
+       </td>
+      @* </td>
+       </tr>*@
+   }
+  </tr>
+</table>
+
+
+
+   @*<table class="table">
+    <thead>
+        <tr>
+           <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MfdDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th> <label>Availability</label></th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>*@
+       
+   @foreach (var item in @ViewBag.Collection)
+   {
+        <tr>
+       <td>
+       <h3>
+           
+               @Html.Raw(item) <br/>
+       </h3>
+      </td>
+       </tr>
+   }
+   
+   @* </tbody>
+</table>
+
+*@

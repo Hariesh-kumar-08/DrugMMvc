@@ -32,6 +32,15 @@
                 <input asp-for="PaymentMode" class="form-control" />
                 <span asp-validation-for="PaymentMode" class="text-danger"></span>
             </div>*@
+           
+             <label>UserName</label>
+                <input type="text" value="@ViewBag.UserName" class="form-control" />
+                  <label>Location</label>
+                <input type="text" value="@ViewBag.Location" class="form-control" />
+                 <label>Phone Number</label>
+                <input type="number" name="ph" id="ph" value="@ViewBag.PhNum"  class="form-control" />
+
+
             <label for="cars">Choose a PaymentMode:</label>
 
 <select name="PaymentMode" id="PaymentMode">

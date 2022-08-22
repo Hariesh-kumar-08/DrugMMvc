@@ -9,8 +9,12 @@
 <p>
     @*<a asp-action="Create">Create New</a>*@
     @* <a asp-action="Transactions" asp-controller="Methods">Purchase History</a>*@
-     
-              
+      <h3>Select from wide variety of products!</h3>     
+    <form asp-action="Cart" asp-controller="Methods" method="get" >
+            <button class="btn btn-danger btn-lg">View Cart</button>
+ </form>|
+
+       
 </p>
 <table class="table">
     <thead>
@@ -88,7 +92,10 @@
                         </form>
 *@
 
-                     <a asp-action="AddCart" asp-controller="Methods" asp-route-id="@item.ProductId">Add To Cart</a>              
+                     <a asp-action="AddCart" asp-controller="Methods" asp-route-id="@item.ProductId">Add To Cart</a>|
+                     <a asp-action="AddCart" asp-controller="Methods" asp-route-id="@item.ProductId">Buy</a>
+                     @* <a asp-action="Cart" asp-controller="Methods">View Cart</a> *@             
+
                  </td>
                        
                     }
@@ -109,3 +116,8 @@
 <form asp-action="Transactions" asp-controller="Methods" method="get" >
             <button class="btn btn-danger btn-lg">Purchase History</button>
         </form>
+        <br />
+@*<form asp-action="Cart" asp-controller="Methods" method="get" >
+            <button class="btn btn-danger btn-lg">View Cart</button>
+ </form>
+  *@

@@ -5,9 +5,8 @@
      Layout = "UserLayout";
 }
 
-<h1>AddCart</h1>
+<h3>Add To Cart</h3>
 
-<h4>Product</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -37,7 +36,7 @@
             </div>*@
                <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" value="@ViewBag.Price" class="form-control" />
+                <input asp-for="Price" value="@ViewBag.Price"  min="@ViewBag.Price" max="@ViewBag.Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
