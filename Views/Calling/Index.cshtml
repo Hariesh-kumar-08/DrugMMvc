@@ -1,0 +1,111 @@
+﻿@model IEnumerable<DrugMMvc.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "UserLayout";
+}
+
+
+<p>
+    @*<a asp-action="Create">Create New</a>*@
+    @* <a asp-action="Transactions" asp-controller="Methods">Purchase History</a>*@
+     
+              
+</p>
+<table class="table">
+    <thead>
+        <tr>
+           @* <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MfdDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th> <label>Availability</label></th>
+           
+           @* <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+           @* <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MfdDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+           @* <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>*@
+             @if(item.Stock<1)
+                    {
+                        <td>
+                       <h6 style="color:red">Out of stock</h6>
+                       </td>
+                       <td>
+                         <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                         <h6 style="display: inline-block">Unavailable</h6>
+                         </td>
+
+                    }
+
+                 else
+                    {
+                       <td>
+                       <h6 style="color:green">Available</h6>
+                       </td>
+                   <td>
+                        <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                      @*  <form asp-action="Details" asp-controller="Calling" method="get" >
+                        <button class="btn btn-danger btn-lg" >Details</button>
+                        </form>|*@
+                       @* <button class="btn success ">Success</button>*@
+@*
+                        <form asp-action="AddCart" asp-controller="Methods" method="get" >
+                        <button class="btn btn-danger btn-lg" style="">Add To Cart</button>
+                        </form>
+*@
+
+                     <a asp-action="AddCart" asp-controller="Methods" asp-route-id="@item.ProductId">Add To Cart</a>              
+                 </td>
+                       
+                    }
+           @* <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ProductId }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.ProductId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })|
+               
+              
+            </td>*@
+        </tr>
+}
+
+  
+    </tbody>
+</table>
+
+<form asp-action="Transactions" asp-controller="Methods" method="get" >
+            <button class="btn btn-danger btn-lg">Purchase History</button>
+        </form>

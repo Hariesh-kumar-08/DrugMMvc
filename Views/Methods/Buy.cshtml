@@ -1,0 +1,61 @@
+﻿@model DrugMMvc.Models.Buyer
+
+@{
+    ViewData["Title"] = "Buy";
+     Layout = "UserLayout";
+}
+
+<h3>Buy</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Buy">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           @* <div class="form-group">
+                <label asp-for="PurchaseId" class="control-label"></label>
+                <input asp-for="PurchaseId" class="form-control" />
+                <span asp-validation-for="PurchaseId" class="text-danger"></span>
+            </div>*@
+           @* <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label"></label>
+                <input asp-for="TotalAmount" class="form-control" />
+                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div>*@
+             <h3>Total Price:@ViewBag.Total</h3>
+           @* <div class="form-group">
+                <label asp-for="DateofPurchase" class="control-label"></label>
+                <input asp-for="DateofPurchase" class="form-control" />
+                <span asp-validation-for="DateofPurchase" class="text-danger"></span>
+            </div>*@
+           @* <div class="form-group">
+                <label asp-for="PaymentMode" class="control-label"></label>
+                <input asp-for="PaymentMode" class="form-control" />
+                <span asp-validation-for="PaymentMode" class="text-danger"></span>
+            </div>*@
+            <label for="cars">Choose a PaymentMode:</label>
+
+<select name="PaymentMode" id="PaymentMode">
+  <option value="Debit Card">Debit Card</option>
+  <option value="UPI">UPI</option>
+  <option value="Cash On Delivery">Cash On Delivery</option>
+</select>
+
+           @* <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

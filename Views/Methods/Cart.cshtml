@@ -1,0 +1,89 @@
+﻿@model IEnumerable<DrugMMvc.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "Cart";
+     Layout = "UserLayout";
+}
+
+<h3>Your Cart</h3>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+
+<table class="table">
+    <thead>
+        <tr>
+           @* <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseId)
+            </th>*@
+           
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr>
+                @* <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseId)
+            </td>*@
+                @if (item.PurchaseId == null)
+                {
+                  
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                      <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+
+         
+               @* @Html.ActionLink("Edit", "Edit", new {  id=item.ProductId }) |*@
+@*                @Html.ActionLink("Details", "Details", new {  id=item.ProductId }) |
+*@                <a asp-action="Delete" asp-controller="Methods"  asp-route-OrderId="@item.OrderId">Delete</a>
+                                @*<a asp-action="AddCart" asp-controller="Methods"  asp-route-OrderId="@item.OrderId">Edit</a>*@
+
+               @*  <a asp-action="Buy" asp-controller="Methods"  asp-route-OrderId="@item.OrderId">Buy</a>*@
+            </td>
+
+            }
+        </tr>
+}
+
+    <h3>Total Price:@ViewBag.Total</h3>
+         <a asp-action="Buy" asp-controller="Methods">Buy</a>
+
+    </tbody>
+</table>
