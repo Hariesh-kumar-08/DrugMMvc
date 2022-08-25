@@ -1,45 +1,26 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model IEnumerable<DrugMMvc.Models.Product>
+@*@model IEnumerable<DrugMMvc.Models.Product>
+*@
+   @{
+   
+    Layout = "UserLayout";
+}
 
-
-<h3>Thanks for your purchase!</h3>
-<h3>Your item will get delivered at @ViewBag.Date</h3>
-<h3>Your Order Details are as follows:</h3>
-  @*  <h3>Name:@ViewBag.UserName</h3>
-    <h3>Phone Number:@ViewBag.PhNum</h3>
-   <h3>Location: @ViewBag.Location</h3>*@
-   <table style="width:100%">
-  <tr>
-    <td>Name</td>
-    <td>Phone Number</td>
-    <td>Location</td>
-    <td>Product Name</td>
-  </tr>
-   <tr>
-    <td><h5>@ViewBag.UserName</h5></td>
-    <td><h5>@ViewBag.PhNum</h5></td>
-    <td><h5>@ViewBag.Location</h5></td>
-     @foreach (var item in @ViewBag.Collection)
-   {
-      @*  <tr>
-       <td>*@
-           <td>
-       <h5>
-           
-               @Html.Raw(item) <br/>
-       </h5>
-       </td>
-      @* </td>
-       </tr>*@
-   }
-  </tr>
-</table>
+<h4>Thanks for your purchase!</h4>
+<h4>Your item will get delivered at @ViewBag.Date</h4>
+@*<h3>Your Order Details are as follows:</h3>
+   <h4>Name:@ViewBag.UserName</h4>
+    <h4>Phone Number:@ViewBag.PhNum</h4>
+   <h4>Location: @ViewBag.Location</h4>
+*@
+<br />
 
 
 
-   @*<table class="table">
+
+  @* <table class="table">
     <thead>
         <tr>
            <th>
@@ -66,7 +47,9 @@
         </tr>
     </thead>
     <tbody>*@
-       
+        <br />
+       <h3> Product List are as follows:</h3>
+ @*      
    @foreach (var item in @ViewBag.Collection)
    {
         <tr>
@@ -77,9 +60,61 @@
        </h3>
       </td>
        </tr>
-   }
+   }*@
    
    @* </tbody>
 </table>
 
 *@
+
+  <table style="width:50%">
+  <tr>
+    <td>Name</td>
+    <td>Phone Number    </td>
+    <td>Location      </td>
+    <td>Total price   </td>
+  </tr>
+   <tr>
+    <td><h5>@ViewBag.UserName</h5></td>
+    <td><h5>@ViewBag.PhNum </h5></td>
+    <td><h5>@ViewBag.Location </h5></td>
+   <td><h5>@ViewBag.Total </h5></td>
+   
+  
+  </tr>
+</table>
+<br />
+ <table style="width:50%">
+  <tr>
+    <td>Name</td>
+    <td>Unit Price</td>
+    <td>Quantity purchased</td>
+    </tr>
+     <tr>
+    <td>
+     @foreach(var item in @ViewBag.Collection)
+     {
+                    <h5>@Html.Raw(item)</h5>
+     }
+    </td>
+    <td>
+    @foreach(var item in @ViewBag.Collection1)
+       {
+                    <h5>@Html.Raw(item)</h5>
+       }
+    </td>
+     <td>
+    @foreach(var item in @ViewBag.Collection2)
+       {
+                <center><h5>@Html.Raw(item)</h5></center>
+       }
+    </td>
+    </tr>
+ </table>
+
+ <br />
+
+<div>
+    <a asp-action="Index" asp-controller="Calling">Back to List</a>
+</div>
+   

@@ -10,6 +10,7 @@ namespace DrugMMvc.Controllers
     {
 
         string baseURL = "https://localhost:7289/";
+        [NoDirectAccess]
         public async Task<IActionResult> Index()
         {
             List<Product> p = new List<Product>();
@@ -26,6 +27,7 @@ namespace DrugMMvc.Controllers
                 return View(p);
             }
         }
+        [NoDirectAccess]
         public IActionResult Create(int id)
         {
             return View();
@@ -44,9 +46,9 @@ namespace DrugMMvc.Controllers
                 //    pizzaobj = JsonConvert.DeserializeObject<Product>(apiResponse);
                 //}
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex");
         }
-
+        [NoDirectAccess]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
@@ -61,6 +63,7 @@ namespace DrugMMvc.Controllers
             }
             return View(obj);
         }
+        [NoDirectAccess]
         [HttpGet]
 
         public async Task<IActionResult> Edit(int id)
@@ -77,6 +80,7 @@ namespace DrugMMvc.Controllers
             }
             return View(p1);
         }
+        [NoDirectAccess]
         [HttpPost]
         public async Task<IActionResult> Edit(Product p)
         {
@@ -93,10 +97,11 @@ namespace DrugMMvc.Controllers
                     p2 = JsonConvert.DeserializeObject<Product>(apr);
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex");
         }
 
         [HttpGet]
+        [NoDirectAccess]
         public async Task<IActionResult> Delete(int id)
         {
             Product p3 = new Product();
@@ -113,6 +118,7 @@ namespace DrugMMvc.Controllers
 
         }
         [HttpPost]
+        [NoDirectAccess]
         public async Task<IActionResult> Delete(Product products)
         {
             int id = (int)TempData["id"];
@@ -121,9 +127,10 @@ namespace DrugMMvc.Controllers
                 client.BaseAddress = new Uri(baseURL);
                 await client.DeleteAsync("https://localhost:7289/api/Products/" + id);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex");
         }
 
+        [NoDirectAccess]
         public async Task<IActionResult> AdminIndex()
         {
             List<Product> p = new List<Product>();

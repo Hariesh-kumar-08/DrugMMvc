@@ -10,7 +10,7 @@ namespace DrugMMvc.Controllers
 {
     public class MethodsController : Controller
     {
-      string baseURL = "https://localhost:7289/";
+        string baseURL = "https://localhost:7289/";
 
         public async Task<IActionResult> AddCart(int id)
         {
@@ -40,7 +40,9 @@ namespace DrugMMvc.Controllers
 
                     }
                 }
+
                 Product p1 = new Product();
+                //HttpContext.Session.SetInt32("stock", (int)p1.Stock);
                 p1.ProductId = id;
                 return View(p1);
             }
@@ -52,7 +54,7 @@ namespace DrugMMvc.Controllers
         {
 
             OrderDetail? O = new OrderDetail();
-             O.UserId = (int)HttpContext.Session.GetInt32("id");
+            O.UserId = (int)HttpContext.Session.GetInt32("id");
             O.ProductId = p.ProductId;
 
             O.ProductId = (int)TempData["id"];
@@ -61,7 +63,7 @@ namespace DrugMMvc.Controllers
             O.Quantity = p.Stock;
 
             O.PurchaseId = null;
-           
+
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(baseURL);
@@ -72,18 +74,18 @@ namespace DrugMMvc.Controllers
                     O = JsonConvert.DeserializeObject<OrderDetail>(apiResponse);
                 }
             }
-           return RedirectToAction("Cart");
+            return RedirectToAction("Cart");
         }
 
         public async Task<IActionResult> Cart()
         {
-           int id= (int)HttpContext.Session.GetInt32("id");
+            int id = (int)HttpContext.Session.GetInt32("id");
             List<OrderDetail> p = new List<OrderDetail>();
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await client.GetAsync("https://localhost:7289/api/Methods/"+id);
+                HttpResponseMessage res = await client.GetAsync("https://localhost:7289/api/Methods/" + id);
                 if (res.IsSuccessStatusCode)
                 {
                     var Prodres = res.Content.ReadAsStringAsync().Result;
@@ -116,7 +118,7 @@ namespace DrugMMvc.Controllers
 
 
             foreach (var n in p)
-                {
+            {
                 if (n.PurchaseId == null)
                 {
                     var p2 = p1.FirstOrDefault(i => i.ProductId == n.ProductId);
@@ -127,19 +129,19 @@ namespace DrugMMvc.Controllers
                 {
                     n.Quantity = null;
                 }
-                }
-            Nullable<int> t = 0; 
-                foreach (var n1 in p)
-                {
+            }
+            Nullable<int> t = 0;
+            foreach (var n1 in p)
+            {
                 if (n1.PurchaseId == null)
                 {
                     t += (n1.UnitPrice * n1.Quantity);
                 }
-                }
+            }
 
-                ViewBag.Total = t;
+            ViewBag.Total = t;
             HttpContext.Session.SetInt32("t", (int)t);
-                return View(p);
+            return View(p);
         }
 
 
@@ -167,14 +169,14 @@ namespace DrugMMvc.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseURL);
-                await client.DeleteAsync("https://localhost:7289/api/Methods/" +OrderId);
+                await client.DeleteAsync("https://localhost:7289/api/Methods/" + OrderId);
             }
-            return RedirectToAction("Index","Calling");
+            return RedirectToAction("Index", "Calling");
         }
 
         public async Task<IActionResult> Buy()
         {
-           ViewBag.Total = HttpContext.Session.GetInt32("t");
+            ViewBag.Total = HttpContext.Session.GetInt32("t");
             ViewBag.UserName = HttpContext.Session.GetString("UserName");
             ViewBag.Location = HttpContext.Session.GetString("Location");
             ViewBag.PhNum = HttpContext.Session.GetString("PhoneNumber");
@@ -187,7 +189,7 @@ namespace DrugMMvc.Controllers
         {
             buyer.DateofPurchase = DateTime.Now;
             buyer.TotalAmount = HttpContext.Session.GetInt32("t");
-           buyer.UserId= (int)HttpContext.Session.GetInt32("id");
+            buyer.UserId = (int)HttpContext.Session.GetInt32("id");
             using (var httpClient = new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(buyer), Encoding.UTF8, "application/json");
@@ -205,7 +207,7 @@ namespace DrugMMvc.Controllers
         public async Task<IActionResult> Transactions()
         {
             List<Buyer> p = new List<Buyer>();
-           var UserId = HttpContext.Session.GetInt32("id");
+            var UserId = HttpContext.Session.GetInt32("id");
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
@@ -228,7 +230,7 @@ namespace DrugMMvc.Controllers
             {
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await client.GetAsync("https://localhost:7289/api/Methods/"+UserId);
+                HttpResponseMessage res = await client.GetAsync("https://localhost:7289/api/Methods/" + UserId);
                 if (res.IsSuccessStatusCode)
                 {
                     var Prodres = res.Content.ReadAsStringAsync().Result;
@@ -236,7 +238,7 @@ namespace DrugMMvc.Controllers
                 }
             }
             List<Buyer> buyer = new List<Buyer>();
-          
+
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
@@ -261,25 +263,43 @@ namespace DrugMMvc.Controllers
                     products = JsonConvert.DeserializeObject<List<Product>>(Prodres);
                 }
             }
-                List<OrderDetail> p3=(from i in od where i.PurchaseId==p2.PurchaseId select i).ToList();
-           int l= p3.Count();
+            List<OrderDetail> p3 = (from i in od where i.PurchaseId == p2.PurchaseId select i).ToList();
+            int l = p3.Count();
             var a = new List<object>();
-            foreach(var item in p3)
+            foreach (var item in p3)
             {
-                foreach(var item2 in products)
+                foreach (var item2 in products)
                 {
-                    if(item.ProductId==item2.ProductId)
-                    a.Add(item2.ProductName);
-                   // a.Add(item2.Price);
-                   
+                    if (item.ProductId == item2.ProductId)
+                        a.Add(item2.ProductName);
+                    // a.Add(item2.Price);
+
                 }
             }
+            var b = new List<object>();
+            foreach (var item in p3)
+            {
+                foreach (var item2 in products)
+                {
+                    if (item.ProductId == item2.ProductId)
+                        b.Add(item2.Price);
+                    // a.Add(item2.Price);
 
-             ViewBag.Collection =a;
+                }
+            }
+            var c = new List<object>();
+            foreach (var item in p3)
+            {
+                c.Add(item.Quantity);
+            }
 
-            DateTime date = DateTime.Today.AddDays(10);
-            string Today = date.ToString("dd/MM/yyyy");
-            ViewBag.Date = date;
+
+            ViewBag.Collection = a;
+            ViewBag.Collection1 = b;
+            ViewBag.Collection2 = c;
+            // DateOnly date = DateOnly.FromDayNumber
+            string Today = DateTime.Now.AddDays(10).ToString("dd-MM-yyyy");
+            ViewBag.Date = Today;
             ViewBag.Total = HttpContext.Session.GetInt32("t");
             ViewBag.UserName = HttpContext.Session.GetString("UserName");
             ViewBag.Location = HttpContext.Session.GetString("Location");
@@ -287,5 +307,76 @@ namespace DrugMMvc.Controllers
             ViewBag.EmailId = HttpContext.Session.GetString("EmailId");
             return View();
         }
+        //  https://localhost:7289/api/GetCart/143
+
+        public async Task<IActionResult> EditCart(OrderDetail order)
+        {
+            OrderDetail od = new OrderDetail();
+            //
+            TempData["id"] = (int)order.OrderId;
+                using (var client1 = new HttpClient())
+                {
+                    using (var res1 = await client1.GetAsync(" https://localhost:7289/api/GetCart/" + order.OrderId))
+                    {
+                        string ar = await res1.Content.ReadAsStringAsync();
+                        od = JsonConvert.DeserializeObject<OrderDetail>(ar);
+                    }
+                }
+            List<Product> p = new List<Product>();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage res = await client.GetAsync("https://localhost:7289/api/Products");
+                if (res.IsSuccessStatusCode)
+                {
+                    var Prodres = res.Content.ReadAsStringAsync().Result;
+                    p = JsonConvert.DeserializeObject<List<Product>>(Prodres);
+                }
+                
+                foreach (var a in p)
+                {
+                    if (a.ProductId == od.ProductId)
+                    {
+                        //HttpContext.Session.SetString("Name", a.ProductName);
+
+
+                        ViewBag.stock = a.Stock;
+
+
+                    }
+                }
+                return View(od);
+            }
+
+        }
+
+        [HttpPost]
+        [Route("OrderDetail")]
+        public async Task<IActionResult> EditingCart(OrderDetail order)
+        {
+            order.OrderId = (int)TempData["id"];
+            OrderDetail od1 = new OrderDetail();
+            using (var client1 = new HttpClient())
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json");
+                using (var res1 = await client1.PutAsync("https://localhost:7289/api/GetCart/OrderDetail",content))
+                {
+                    string ar = await res1.Content.ReadAsStringAsync();
+                    od1 = JsonConvert.DeserializeObject<OrderDetail>(ar);
+                }
+            }
+            return RedirectToAction("Cart");
+        }
+
+
+        #region LOGOUT
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index","Home");
+        }
+        #endregion
     }
+
 }

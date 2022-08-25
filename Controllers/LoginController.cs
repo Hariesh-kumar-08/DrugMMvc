@@ -1,13 +1,47 @@
 ﻿using DrugMMvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 
 namespace DrugMMvc.Controllers
 {
+    public class NoDirectAccessAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            var canAccess = false;
+
+
+
+            // check the refer
+            var referer = filterContext.HttpContext.Request.Headers["Referer"].ToString();
+            if (!string.IsNullOrEmpty(referer))
+            {
+                var rUri = new System.UriBuilder(referer).Uri;
+                var req = filterContext.HttpContext.Request;
+                if (req.Host.Host == rUri.Host && req.Host.Port == rUri.Port && req.Scheme == rUri.Scheme)
+                {
+                    canAccess = true;
+                }
+            }
+
+
+
+            // ... check other requirements
+
+
+
+            if (!canAccess)
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Index", area = "" }));
+            }
+        }
+    }
     public class LoginController : Controller
     {
+
         string baseURL = "https://localhost:7289/";
        
 
@@ -19,6 +53,8 @@ namespace DrugMMvc.Controllers
             session = httpContextAccessor.HttpContext.Session;
 
         }
+
+
 
         [HttpGet]
         public IActionResult UserLogin()
@@ -76,7 +112,7 @@ namespace DrugMMvc.Controllers
             {
                 client.BaseAddress = new Uri(baseURL);
                 StringContent content = new StringContent(JsonConvert.SerializeObject(u), Encoding.UTF8, "application/json");
-                await client.PostAsync("https://localhost:7195/api/Login/", content);
+                await client.PostAsync("https://localhost:7289/api/Login", content);
             }
             return RedirectToAction("UserLogin", "Login");
         }

@@ -1,0 +1,77 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <center> <h1>Invoice</h1>  </center>
+
+
+
+
+        <table style="width:50%">
+            <tr>
+                <td>Name</td>
+                <td>Phone Number    </td>
+                <td>Location      </td>
+                <td>Total price   </td>
+            </tr>
+            <tr>
+                <td><h5>@ViewBag.UserName</h5></td>
+                <td><h5>@ViewBag.PhNum </h5></td>
+                <td><h5>@ViewBag.Location </h5></td>
+                <td><h5>@ViewBag.Total </h5></td>
+
+
+            </tr>
+        </table>
+
+        <br />
+        <table style="width:50%">
+            <tr>
+                <td>Name</td>
+                <td>Unit Price</td>
+                <td>Quantity purchased</td>
+            </tr>
+            <tr>
+                <td>
+                    @foreach (var item in @ViewBag.Collection)
+                    {
+                        <h5>@Html.Raw(item)</h5>
+                    }
+                </td>
+                <td>
+                    @foreach (var item in @ViewBag.Collection1)
+                    {
+                        <h5>@Html.Raw(item)</h5>
+                    }
+                </td>
+                <td>
+                    @foreach (var item in @ViewBag.Collection2)
+                    {
+                        <center><h5>@Html.Raw(item)</h5></center>
+                    }
+                </td>
+            </tr>
+        </table>
+
+        <br />
+
+
+
+      
+    </div>
+</body>
+</html>

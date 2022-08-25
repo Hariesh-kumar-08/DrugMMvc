@@ -6,16 +6,21 @@
 }
 
 
+
 <p>
     @*<a asp-action="Create">Create New</a>*@
     @* <a asp-action="Transactions" asp-controller="Methods">Purchase History</a>*@
-      <h3>Select from wide variety of products!</h3>     
+      <h3>Select from wide variety of products!</h3>   
+  <br />
     <form asp-action="Cart" asp-controller="Methods" method="get" >
-            <button class="btn btn-danger btn-lg">View Cart</button>
- </form>|
+            <button  class="btn btn-warning float-right">View Cart</button>
+    </form>
+   
+    
 
        
 </p>
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -23,7 +28,8 @@
                 @Html.DisplayNameFor(model => model.ProductId)
             </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+               @* @Html.DisplayNameFor(model => model.ProductName)*@
+               <label>Product Name</label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MfdDate)
@@ -112,9 +118,10 @@
   
     </tbody>
 </table>
+<br />
 
 <form asp-action="Transactions" asp-controller="Methods" method="get" >
-            <button class="btn btn-danger btn-lg">Purchase History</button>
+            <button class="btn btn-danger btn-lg">Transaction Details</button>
         </form>
         <br />
 @*<form asp-action="Cart" asp-controller="Methods" method="get" >

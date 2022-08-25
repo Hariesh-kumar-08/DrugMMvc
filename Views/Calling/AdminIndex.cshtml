@@ -2,22 +2,32 @@
 
 @{
     ViewData["Title"] = "AdminIndex";
+        Layout = "AdminLayout";
+
 }
 
-<h1>AdminIndex</h1>
+
 
 <p>
+   <h3> Admin Portal</h3>
+   <br />
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductId)
-            </th>
+@*                @Html.DisplayNameFor(model => model.ProductId)
+*@   
+<label>
+    Product Id
+</label>
+</th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
+@*                @Html.DisplayNameFor(model => model.ProductName)
+*@  Product Name      
+</th>
             <th>
                 @Html.DisplayNameFor(model => model.MfdDate)
             </th>
@@ -51,13 +61,32 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
+               @if(item.Stock<1)
+                {
+                     <td style="color:RED">
                 @Html.DisplayFor(modelItem => item.Stock)
-            </td>
+                        <h8>(Refill the inventory)</h8>
+                        </td>
+                    }
+                    else if(item.Stock<15)
+                    {
+                        <td style="color:brown">
+                             @Html.DisplayFor(modelItem => item.Stock)
+                        <h8>(Attention required)</h8>
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="color:green">
+                             @Html.DisplayFor(modelItem => item.Stock)
+                       <h8>(No action needed)</h8> 
+                       </td>
+                    }
+
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new {  id=item.ProductId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ProductId}) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })
             </td>
         </tr>
 }
