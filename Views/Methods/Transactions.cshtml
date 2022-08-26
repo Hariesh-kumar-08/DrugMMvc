@@ -2,61 +2,59 @@
 
 @{
     ViewData["Title"] = "Transactions";
-     Layout = "UserLayout";
+    Layout = "UserLayout";
 }
 
-<h3>Your Purchase History</h3>
-@*
-<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
-<table class="table">
-    <thead>
-        <tr>
-           @* <th>
-                @Html.DisplayNameFor(model => model.PurchaseId)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateofPurchase)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaymentMode)
-            </th>
-          @*  <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>*@
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-           @* <td>
-                @Html.DisplayFor(modelItem => item.PurchaseId)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateofPurchase)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentMode)
-            </td>
-          @*  <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>*@
-           @* <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>*@
-        </tr>
-}
-    </tbody>
+<h1>Transactions</h1>
+
+
+<table style="width:100%">
+    <tr>
+       
+        <td>Total Amount</td>
+        <td>Mode of Payment</td>
+        <td>Time of Purchase</td>
+      
+    </tr>
+    <tr>
+       
+        <td><h5>
+                @foreach (var item in @ViewBag.TM)
+                {
+                    <h5>@Html.Raw(item)</h5>
+                }
+            </h5>
+        </td>
+        <td><h5>
+                @foreach (var item in @ViewBag.PM)
+                {
+                    <h5>@Html.Raw(item)</h5>
+                }
+            </h5>
+        </td>
+        <td><h5>
+                @foreach (var item in @ViewBag.DOP)
+                {
+                    <h5>@Html.Raw(item)</h5>
+                }
+            </h5>
+        </td>
+      
+
+    </tr>
 </table>
 
-
+<table>
+    <tr>
+        <td>Product List</td>
+    </tr>
+    <tr>
+        <td>
+            <h5>
+                @foreach (var item in @ViewBag.PName)
+                {
+                    <h5>@Html.Raw(item)</h5>
+                }
+            </h5>
+        </td>
+    </tr>

@@ -75,8 +75,8 @@
          
                @* @Html.ActionLink("Edit", "Edit", new {  id=item.ProductId }) |*@
 @*                @Html.ActionLink("Details", "Details", new {  id=item.ProductId }) |
-*@                <a asp-action="Delete" asp-controller="Methods"  asp-route-OrderId="@item.OrderId">Delete</a>
-                   <a asp-action="EditCart" asp-controller="Methods"  asp-route-OrderId="@item.OrderId">Edit</a>
+*@                <a asp-action="Delete" asp-controller="Methods"  asp-route-OrderId="@item.OrderId">Delete</a>|
+                   <a asp-action="EditCart" asp-controller="Methods"  asp-route-OrderId="@item.OrderId">Edit Quantity</a>
               
 
                @*  <a asp-action="Buy" asp-controller="Methods"  asp-route-OrderId="@item.OrderId">Buy</a>*@

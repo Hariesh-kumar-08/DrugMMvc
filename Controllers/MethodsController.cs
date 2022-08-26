@@ -12,6 +12,8 @@ namespace DrugMMvc.Controllers
     {
         string baseURL = "https://localhost:7289/";
 
+        [NoDirectAccess]
+
         public async Task<IActionResult> AddCart(int id)
         {
             TempData["id"] = id;
@@ -47,6 +49,9 @@ namespace DrugMMvc.Controllers
                 return View(p1);
             }
         }
+
+        [NoDirectAccess]
+
         [HttpPost]
 
 
@@ -76,6 +81,7 @@ namespace DrugMMvc.Controllers
             }
             return RedirectToAction("Cart");
         }
+        [NoDirectAccess]
 
         public async Task<IActionResult> Cart()
         {
@@ -162,6 +168,7 @@ namespace DrugMMvc.Controllers
 
         //}
 
+        [NoDirectAccess]
 
         public async Task<IActionResult> Delete(int OrderId)
         {
@@ -174,6 +181,8 @@ namespace DrugMMvc.Controllers
             return RedirectToAction("Index", "Calling");
         }
 
+        [NoDirectAccess]
+
         public async Task<IActionResult> Buy()
         {
             ViewBag.Total = HttpContext.Session.GetInt32("t");
@@ -184,6 +193,9 @@ namespace DrugMMvc.Controllers
             return View();
 
         }
+
+        [NoDirectAccess]
+
         [HttpPost]
         public async Task<IActionResult> Buy(Buyer buyer)
         {
@@ -203,6 +215,7 @@ namespace DrugMMvc.Controllers
 
             return RedirectToAction("Thanking");
         }
+        [NoDirectAccess]
 
         public async Task<IActionResult> Transactions()
         {
@@ -218,9 +231,60 @@ namespace DrugMMvc.Controllers
                     var Prodres = res.Content.ReadAsStringAsync().Result;
                     p = JsonConvert.DeserializeObject<List<Buyer>>(Prodres);
                 }
-                return View(p);
+               
             }
+            List<String> s=new List<String>();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage res = await client.GetAsync("https://localhost:7289/api/GetProductName/GetProductName/" + UserId);
+                if (res.IsSuccessStatusCode)
+                {
+                    var Prodres = res.Content.ReadAsStringAsync().Result;
+                    s= JsonConvert.DeserializeObject<List<string>>(Prodres);
+                }
+
+            }
+           
+
+
+
+            var mode = new List<string>();
+            foreach(var m in p)
+            {
+                if(m.PaymentMode!=null)
+                {
+                    mode.Add(m.PaymentMode);
+                }
+            }
+            var mode1 = new List<object>();
+            foreach (var m in p)
+            {
+                if (m.DateofPurchase != null)
+                {
+                   
+                    mode1.Add(m.DateofPurchase);
+                }
+            }
+            var mode2 = new List<object>();
+            foreach (var m in p)
+            {
+                if (m.TotalAmount!= null)
+                {
+                    mode2.Add(m.TotalAmount);
+                }
+            }
+
+
+
+            ViewBag.PName = s;
+            ViewBag.DOP = mode1;
+            ViewBag.PM=mode;
+            ViewBag.TM=mode2;
+            return View();
         }
+        [NoDirectAccess]
 
         public async Task<IActionResult> Thanking()
         {
@@ -308,6 +372,7 @@ namespace DrugMMvc.Controllers
             return View();
         }
         //  https://localhost:7289/api/GetCart/143
+        [NoDirectAccess]
 
         public async Task<IActionResult> EditCart(OrderDetail order)
         {
